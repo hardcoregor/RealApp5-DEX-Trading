@@ -10,6 +10,7 @@ describe("Exchange", () => {
   let deployer;
   let feeAccount;
   let user1;
+  let user2;
 
   let exchange;
   let token1;
@@ -24,6 +25,7 @@ describe("Exchange", () => {
     deployer = accounts[0];
     feeAccount = accounts[1];
     user1 = accounts[2];
+    user2 = accounts[3];
 
 
     const Exchange = await ethers.getContractFactory('Exchange');
@@ -32,6 +34,9 @@ describe("Exchange", () => {
     const Token = await ethers.getContractFactory('Token');
     token1 = await Token.deploy("HardCore", "HRDCR", 1000000);
     token2 = await Token.deploy("Mock Dai", "mDAI", 1000000);
+
+    await token1.transfer(user1.address, 10000);
+    await token2.transfer(user2.address, 10000);
   })
 
   describe("Deployment", () => {
@@ -167,4 +172,127 @@ describe("Exchange", () => {
     })
 
   })
+
+  describe("Cancelling orders", () => {
+    const amount = 100;
+    let result;
+
+    beforeEach(async () => {
+      await token1.connect(user1).approve(exchange.address, amount);
+      await exchange.connect(user1).depositToken(token1.address, amount);
+      let tx = await exchange.connect(user1).makeOrder(token2.address, 1, token1.address, 1)
+      await tx.wait()
+
+      let txCancel = await exchange.connect(user1).cancelOrder(1);
+      result = await txCancel.wait();
+    })
+
+    describe("Success", () => {
+      it("Cancel order", async () => {
+        let data = await exchange.connect(user1).orderCancelled(1);
+        expect(data).to.eq(true);
+      })
+
+      it("Emit Cancel Event", () => {
+        const event = result.events[0];
+        expect(event.event).to.equal('Cancel')
+
+        const args = event.args;
+
+        expect(args.id).to.eq(1)
+        expect(args.user).to.eq(user1.address)
+        expect(args.tokenGet).to.eq(token2.address)
+        expect(args.amountGet).to.eq(1)
+        expect(args.tokenGive).to.eq(token1.address)
+        expect(args.amountGive).to.eq(1)
+        expect(args.timestamp).to.at.least(1)
+      })
+
+    })
+
+    describe("Failure", () => {
+        it("Uncorrect order id", async() => {
+            await expect(exchange.connect(user1).cancelOrder(9)).to.be.reverted;
+        })
+
+        it("Only owner order can cancel this order", async() => {
+            await expect(exchange.cancelOrder(1)).to.be.reverted;
+        })
+    })
+
+  })
+
+  describe("Filling order", () => {
+    const amount = 100;
+    const halfamount = 50;
+    const withFee = 45;
+    const fee = 5;
+    let result;
+    let tx;
+    let invalidId = 999999;
+
+    beforeEach(async() => {
+        await token1.connect(user1).approve(exchange.address, amount);
+        await token2.connect(user2).approve(exchange.address, amount);
+
+        await exchange.connect(user1).depositToken(token1.address, amount);
+        await exchange.connect(user2).depositToken(token2.address, amount);
+
+        await exchange.connect(user1).makeOrder(token2.address, halfamount, token1.address, halfamount);
+        tx = await exchange.connect(user2).fillOrder(1);
+        result = await tx.wait();
+    })
+
+    describe("Success", () => {
+        it("Success fill order", async ()=> {
+            expect(await exchange.balanceOf(token1.address, user1.address)).to.eq(halfamount);
+            expect(await exchange.balanceOf(token2.address, user1.address)).to.eq(halfamount);
+            expect(await exchange.balanceOf(token1.address, user2.address)).to.eq(halfamount);
+            expect(await exchange.balanceOf(token2.address, user2.address)).to.eq(withFee);
+            expect(await exchange.balanceOf(token1.address, feeAccount.address)).to.eq(0);
+            expect(await exchange.balanceOf(token2.address, feeAccount.address)).to.eq(fee);
+        })
+
+        it("Order filled marked true", async() => {
+            expect(await exchange.orderFilled(1)).to.eq(true);
+        })
+
+        it("Emit Cancel Event", () => {
+            const event = result.events[0];
+            expect(event.event).to.equal('Trade')
+    
+            const args = event.args;
+    
+            expect(args.id).to.eq(1)
+            expect(args.user).to.eq(user2.address)
+            expect(args.tokenGet).to.eq(token2.address)
+            expect(args.amountGet).to.eq(halfamount)
+            expect(args.tokenGive).to.eq(token1.address)
+            expect(args.amountGive).to.eq(halfamount)
+            expect(args.creator).to.eq(user1.address)
+            expect(args.timestamp).to.at.least(1)
+          })
+    })
+
+    describe("Failure", () => {
+
+        it("Invalid order id", async() => {
+            await expect(exchange.connect(user2).fillOrder(invalidId)).to.be.reverted;
+        })
+                          
+        it("Order filled", async() => {
+            await expect(exchange.connect(user2).fillOrder(1)).to.be.reverted;
+        })
+
+        it("Order canceled", async() => {
+            let partTokenSwap = 10;
+            await exchange.connect(user1).makeOrder(token2.address, partTokenSwap, token1.address, partTokenSwap);
+            await exchange.connect(user1).cancelOrder(2);
+
+            await expect(exchange.connect(user2).fillOrder(2)).to.be.reverted;
+        })
+    })
+
+  })
+
 })
