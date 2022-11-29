@@ -1,13 +1,31 @@
+const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
 
   const Token = await hre.ethers.getContractFactory("Token");
-  const token = await Token.deploy();
+  const Exchange = await hre.ethers.getContractFactory("Exchange");
 
-  await token.deployed();
+  const accounts = await ethers.getSigners();
+  const feeAccount = accounts[1];
+  const feePercent = 10;
 
-  console.log(`Successful deployed:  ${token.address}`);
+  const exchange = await Exchange.deploy(feeAccount.address, feePercent);
+  await exchange.deployed();
+
+  const tokenHRDCR = await Token.deploy('HardCore', 'HRDCR', '1000000');
+  await tokenHRDCR.deployed();
+
+  const tokenMETH = await Token.deploy('mETH', 'mETH', '1000000');
+  await tokenMETH.deployed();
+
+  const tokenMDAI = await Token.deploy('Mock Dai', 'mDai', '1000000');
+  await tokenMDAI.deployed();
+
+  console.log(`Successful deployed Exchange:  ${exchange.address}`);
+  console.log(`Successful deployed HRDCR:  ${tokenHRDCR.address}`);
+  console.log(`Successful deployed mEth:  ${tokenMETH.address}`);
+  console.log(`Successful deployed mDai:  ${tokenMDAI.address}`);
 }
 
 main().catch((error) => {
