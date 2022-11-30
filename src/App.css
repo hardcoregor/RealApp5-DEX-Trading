@@ -10,12 +10,8 @@ html, body, #app, #app>div {
   height: 100%
 }
 
-.main-left-bg {
-  background: #eb1484;
-}
-
-.main-right-bg {
-  background: #c81cc5;
+.bg {
+  background: #252427;
 }
 
 .black-bg {
