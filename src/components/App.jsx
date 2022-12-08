@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import config from '../context/config.json';
 import { loadAccount, loadExchange, loadNetwork, loadProvider, loadToken } from '../context/Interactions';
+import Balance from './Balance';
+import Markets from './Markets';
 import Navbar from './Navbar';
 
 function App() {
@@ -38,7 +40,10 @@ function App() {
     <div className='h-full'>
       <Navbar />
       <main className='flex h-full'>
-        <section className='bg w-1/4 h-full border-r border-pink-1 border-opacity-30'></section>
+        <section className='bg w-1/4 h-full border-r border-pink-1 border-opacity-30'>
+          <Markets />
+          <Balance />
+        </section>
         <section className='bg w-3/4'></section>
       </main>
     </div>

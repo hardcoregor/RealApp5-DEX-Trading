@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
 html, body, #app, #app>div {
   height: 100%
 }
@@ -22,6 +30,10 @@ html, body, #app, #app>div {
 
 .nft-gradient {
    background: linear-gradient(101.12deg, #EB1484 0.01%, #dabb40 99.99%, #dfbb2e 100%, #ecbf0f 100%);
+}
+
+.bg-none {
+   background: none;
 }
 
 .btn-background {

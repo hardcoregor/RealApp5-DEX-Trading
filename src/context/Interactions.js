@@ -25,25 +25,24 @@ export const loadAccount = async (provider, dispatch) => {
   let balanceRaw = await provider.getBalance(account);
   let balance = ethers.utils.formatEther(balanceRaw);
 
-  dispatch({type: 'ETHER_BALANCE_LOADED', balance})
+  dispatch({ type: 'ETHER_BALANCE_LOADED', balance })
 
   return account;
 }
 
 export const loadToken = async (provider, addresses, dispatch) => {
   const { abi } = tokenAbi;
+  let token, symbol;
 
-  let tokenHrdcr = new ethers.Contract(addresses[0], abi, provider)
-  let symbolHrdcr = await tokenHrdcr.symbol();
-  dispatch({ type: 'TOKEN_1_LOADED', tokenHrdcr, symbolHrdcr });
+  token = new ethers.Contract(addresses[0], abi, provider)
+  symbol = await token.symbol();
+  dispatch({ type: 'TOKEN_1_LOADED', token, symbol });
 
-  let tokenMeth = new ethers.Contract(addresses[1], abi, provider)
-  let symbolMeth = await tokenMeth.symbol();
-  dispatch({ type: 'TOKEN_2_LOADED', tokenMeth, symbolMeth });
+  token = new ethers.Contract(addresses[1], abi, provider)
+  symbol = await token.symbol();
+  dispatch({ type: 'TOKEN_2_LOADED', token, symbol });
 
-  const tokens = [tokenHrdcr, tokenMeth];
-
-  return tokens;
+  return token;
 }
 
 export const loadExchange = async (provider, address, dispatch) => {
