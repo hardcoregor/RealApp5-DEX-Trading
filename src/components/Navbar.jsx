@@ -55,17 +55,21 @@ const Navbar = () => {
                 <p className='flex text-base font-medium uppercase mr-3'>{Number(balance).toFixed(4)} <span className='ml-1'>ETH</span></p>
               </div>
             }
-            <Button btnName={account.slice(0, 5) + '...' + account.slice(37, 42)} />
+            <a href={config[chainId] ? `${config[chainId].explorerUrl}address/${account}` : `#`}  target="_blank" rel='noreferrer'>
+              <Button btnName={account.slice(0, 5) + '...' + account.slice(37, 42)} />
+            </a>
 
-            <div className='flex pl-2'>
-              <select className='btn-background outline-none cursor-pointer text-center' name="networks" id="networks" value={config[chainId] ? `0x${chainId.toString(16)}` : `0`} onChange={networkHandler}>
-                <option value="0">Select network</option>
-                <option value="0x539">Localhost</option>
-                <option value="0x5">Goerli</option>
-                <option value="0x1">Mainnet</option>
-              </select>
-              <img src={eth} alt="ETH logo" width={40} />
-            </div>
+            {chainId && (
+              <div className='flex pl-2'>
+                <select className='btn-background outline-none cursor-pointer text-center' name="networks" id="networks" value={config[chainId] ? `0x${chainId.toString(16)}` : `0`} onChange={networkHandler}>
+                  <option value="0">Select network</option>
+                  <option value="0x539">Localhost</option>
+                  <option value="0x5">Goerli</option>
+                  <option value="0x1">Mainnet</option>
+                </select>
+                <img src={eth} alt="ETH logo" width={40} />
+              </div>
+            )}
 
           </div>) :
           <Button btnName='connect' handleClick={connectHandler} />

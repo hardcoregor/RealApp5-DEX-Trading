@@ -12,9 +12,13 @@ function App() {
     const provider = loadProvider(dispatch);
     const chainId = await loadNetwork(provider, dispatch)
 
+    window.ethereum.on('chainChanged', () => {
+      window.location.reload();
+    }) //Reload page when Chain changes
+
     window.ethereum.on('accountsChanged', async() => {
       await loadAccount(provider, dispatch);
-    })
+    }) //Reload when wallet changes
 
     const addressHrdcr = config[chainId].Hrdcr.address;
     const addressMeth = config[chainId].mEth.address;

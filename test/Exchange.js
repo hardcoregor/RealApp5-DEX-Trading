@@ -1,4 +1,3 @@
-const { wait } = require('@testing-library/user-event/dist/utils');
 const { expect } = require('chai');
 const { ethers } = require("hardhat");
 
