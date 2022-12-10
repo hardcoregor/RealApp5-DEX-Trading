@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,12 +12,15 @@
   }
 }
 
-html, body, #app, #app>div {
-  height: 100%
+html,
+body,
+#app,
+#app > div {
+  height: 100vh;
 }
 
 #root {
-  height: 100%
+  height: 100vh;
 }
 
 .bg {
@@ -29,13 +32,43 @@ html, body, #app, #app>div {
 }
 
 .nft-gradient {
-   background: linear-gradient(101.12deg, #EB1484 0.01%, #dabb40 99.99%, #dfbb2e 100%, #ecbf0f 100%);
+  background: linear-gradient(
+    101.12deg,
+    #eb1484 0.01%,
+    #dabb40 99.99%,
+    #dfbb2e 100%,
+    #ecbf0f 100%
+  );
 }
 
 .bg-none {
-   background: none;
+  background: none;
 }
 
 .btn-background {
-  background: #3E3D41;
+  background: #3e3d41;
+}
+
+.pink_gradient {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+
+  background: #fb37ff;
+  filter: blur(500px);
+}
+
+.blue_gradient {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  width: 300px;
+  height: 250px;
+  border-radius: 50%;
+
+  background: #18b2de;
+  filter: blur(500px);
 }

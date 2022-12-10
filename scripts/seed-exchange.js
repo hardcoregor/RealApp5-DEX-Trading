@@ -16,10 +16,12 @@ async function main() {
     const accounts = await ethers.getSigners();
 
     //FETCH NETWORK
-    const { chainId } = await ethers.provider.getNetwork();
+    // const { chainId } = await ethers.provider.getNetwork();
+    const chainId = 31337;
 
     //CONNECT TO CONTRACT
     const exchange = await ethers.getContractAt('Exchange', config[chainId].exchange.address);
+    console.log(exchange)
     const Hrdcr = await ethers.getContractAt('Token', config[chainId].Hrdcr.address);
     const mEth = await ethers.getContractAt('Token', config[chainId].mEth.address);
     const mDai = await ethers.getContractAt('Token', config[chainId].mDai.address);
