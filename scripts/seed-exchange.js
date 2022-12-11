@@ -21,7 +21,6 @@ async function main() {
 
     //CONNECT TO CONTRACT
     const exchange = await ethers.getContractAt('Exchange', config[chainId].exchange.address);
-    console.log(exchange)
     const Hrdcr = await ethers.getContractAt('Token', config[chainId].Hrdcr.address);
     const mEth = await ethers.getContractAt('Token', config[chainId].mEth.address);
     const mDai = await ethers.getContractAt('Token', config[chainId].mDai.address);
