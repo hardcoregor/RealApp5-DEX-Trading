@@ -1,9 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import sort from '../assets/sort.svg';
+import { orderBookSelector } from '../store/selectors';
 
 const OrderBook = () => {
   const symbols = useSelector(state => state.tokens.symbols);
+  const orderBook = useSelector(orderBookSelector)
 
   return (
     <div className='btn-background m-4 rounded-lg p-2'>

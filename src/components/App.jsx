@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import config from '../context/config.json';
-import { loadAccount, loadExchange, loadNetwork, loadProvider, loadToken, subscribeToEvents } from '../context/Interactions';
+import { loadAccount, loadExchange, loadNetwork, loadProvider, loadToken, subscribeToEvents, loadAllOrders } from '../context/Interactions';
 import Balance from './Balance';
 import Markets from './Markets';
 import Navbar from './Navbar';
@@ -30,6 +30,8 @@ function App() {
 
     const addressExchange = config[chainId].exchange.address;
     const exchange = await loadExchange(provider, addressExchange, dispatch);
+
+    loadAllOrders(provider, exchange, dispatch);
 
     subscribeToEvents(exchange, dispatch);
   }
