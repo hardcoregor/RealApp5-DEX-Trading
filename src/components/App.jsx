@@ -7,6 +7,7 @@ import Balance from './Balance';
 import Markets from './Markets';
 import Navbar from './Navbar';
 import Order from './Order';
+import OrderBook from './OrderBook';
 
 function App() {
   const dispatch = useDispatch();
@@ -40,17 +41,19 @@ function App() {
 
 
   return (
-    <div className='h-full bg overflow-auto'>
+    <div className='flex flex-col h-full bg overflow-auto'>
       <Navbar />
-      <main className='flex h-full'>
-        <section className='w-1/4 h-full border-r border-pink-1 border-opacity-30 z-10'>
+      <main className='flex flex-1'>
+        <section className='w-1/4  border-r border-pink-1 border-opacity-30 z-10'>
           <Markets />
           <Balance />
           <Order />
           <div className="pink_gradient -z-5" />
           <div className="blue_gradient -z-5" />
         </section>
-        <section className='w-3/4'></section>
+        <section className='w-3/4'>
+          <OrderBook />
+        </section>
       </main>
     </div>
   );

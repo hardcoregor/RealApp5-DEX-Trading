@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { makeBuyOrder } from '../context/Interactions'
+import { makeBuyOrder, makeSellOrder } from '../context/Interactions'
 import Button from './Button'
 
 const Order = () => {
@@ -24,13 +24,14 @@ const Order = () => {
   }
 
   const sellAction = async() => {
+    await makeSellOrder(provider, exchange, tokens, { amount, price }, dispatch);
     setAmount(0);
     setPrice(0);
   }
 
 
   return (
-    <div>
+    <div className=''>
       <div className='w-full mt-3 pb-3 border-b border-pink-1 border-opacity-30'>
         <h2 className='font-poppins font-bold text-white text-lg text-center'>New order</h2>
       </div>

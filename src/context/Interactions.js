@@ -85,6 +85,16 @@ export const loadBalances = async (dispatch, exchange, tokens, account) => {
   dispatch({ type: 'EXCHANGE_TOKEN_2_BALANCE_LOADED', balance });
 }
 
+export const loadAllOrders = async(provider, exchange, dispatch) => {
+  const block = await provider.getBlockNumber();
+
+  const orderStream = await exchange.queryFilter('Order', 0, block);
+  const allOrders = orderStream.map(event => event.args);
+
+  dispatch({type: 'ALL_ORDERS_LOADED', allOrders});
+
+}
+
 export const transferTokens = async (provider, exchange, transferType, token, amount, dispatch) => {
   let transaction;
 
@@ -121,6 +131,26 @@ export const makeBuyOrder = async (provider, exchange, tokens, order, dispatch) 
   const amountGet = ethers.utils.parseUnits(order.amount, 18);
   const tokenGive = tokens[1].address;
   const amountGive = ethers.utils.parseUnits((order.amount * order.price).toString(), 18);
+
+  dispatch({ type: 'NEW_ORDER_REQUEST' });
+
+  try {
+    transaction = await exchange.connect(signer).makeOrder(tokenGet, amountGet, tokenGive, amountGive);
+    await transaction.wait();
+  } catch (error) {
+    dispatch({ type: 'NEW_ORDER_FAILED' });
+  }
+}
+
+export const makeSellOrder = async (provider, exchange, tokens, order, dispatch) => {
+  let transaction;
+
+  const signer = await provider.getSigner();
+
+  const tokenGet = tokens[1].address;
+  const amountGet = ethers.utils.parseUnits((order.amount * order.price).toString(), 18);
+  const tokenGive = tokens[0].address;
+  const amountGive = ethers.utils.parseUnits(order.amount, 18);
 
   dispatch({ type: 'NEW_ORDER_REQUEST' });
 

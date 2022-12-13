@@ -66,6 +66,8 @@ export const tokens = (state = DEFAULT_TOKENS_STATE, action) => {
 const DEFAULT_EXCHANGE_STATE = { loaded: false, contract: {}, transaction: { isSuccessful: false }, allOrders: { loaded: false, data: [] }, events: [] }
 
 export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
+  let index, data;
+
   switch (action.type) {
     case 'EXCHANGE_LOADED':
       return {
@@ -132,11 +134,19 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
       }
 
     case 'NEW_ORDER_SUCCESS':
+      index = state.allOrders.data.findIndex(order => order.id === action.orderId);
+
+      if (index === -1) {
+        data = [...state.allOrders.data, action.order];
+      } else {
+        data = state.allOrders.data;
+      }
+
       return {
         ...state,
         allOrders: {
           ...state.allOrders,
-          data: [...state.allOrders.data, action.order]
+          data
         },
         transaction: {
           transactionType: 'New order',
