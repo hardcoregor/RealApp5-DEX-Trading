@@ -21,12 +21,16 @@ module.exports = {
         'file-reject': '#ff1744',
         'overlay-black': 'rgba(0, 0, 0, 0.8)',
         'pink-1': '#eb1484',
+        'redSell': '#F45353',
+        'greenBuy': '#25CE8F',
+        'light-gray': '#66646b'
       },
       width: {
         215: '215px',
         357: '357px',
         557: '557px',
         49: '49%',
+        200: '200%',
       },
       minWidth: {
         155: '155px',

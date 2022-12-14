@@ -1,10 +1,29 @@
 import moment from "moment";
 import { createSelector } from "reselect";
-import { get } from 'lodash';
+import { get, groupBy, reject } from 'lodash';
 import { ethers } from "ethers";
 
 const tokens = state => get(state, 'tokens.contracts');
 const allOrders = state => get(state, 'exchange.allOrders.data', []);
+const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', []);
+const filledOrders = state => get(state, 'exchange.filledOrders.data', []);
+
+const openOrders = state => {
+  const all = allOrders(state)
+  const filled = filledOrders(state)
+  const cancelled = cancelledOrders(state)
+
+  const openOrders = reject(all, (order) => {
+    const orderFilled = filled.some((o) => o.id.toString() === order.id.toString());
+    const orderCancelled = cancelled.some((o) => o.id.toString() === order.id.toString());
+    return(orderFilled || orderCancelled);
+  })
+
+  return openOrders;
+}
+
+const GREEN = '#25CE8F';
+const RED = '#F45353';
 
 const decorateOrder = (order, tokens) => {
   let token0Amount, token1Amount;
@@ -29,7 +48,7 @@ const decorateOrder = (order, tokens) => {
   })
 }
 
-export const orderBookSelector = createSelector(allOrders, tokens, (orders, tokens) => {
+export const orderBookSelector = createSelector(openOrders, tokens, (orders, tokens) => {
 
   if (!tokens[0] || !tokens[1]) { return };
   orders = orders.filter((o) => o.tokenGet === tokens[0].address || o.tokenGet === tokens[1].address);
@@ -37,7 +56,21 @@ export const orderBookSelector = createSelector(allOrders, tokens, (orders, toke
 
   orders = decorateOrderBookOrders(orders, tokens);
 
-  console.log(orders);
+  orders = groupBy(orders, 'orderType');
+
+  const buyOrders = get(orders, 'buy', []);
+  const sellOrders = get(orders, 'sell', []);
+
+  orders = {
+    ...orders,
+    buyOrders: buyOrders.sort((a, b) => b.tokenPrice - a.tokenPrice)
+  }
+
+  orders = {
+    ...orders,
+    sellOrders: sellOrders.sort((a,b) => b.tokenPrice - a.tokenPrice)
+  }
+  return orders;
 })
 
 const decorateOrderBookOrders = (orders, tokens) => {
@@ -50,15 +83,13 @@ const decorateOrderBookOrders = (orders, tokens) => {
   )
 }
 
-const GREEN = '#25CE8F';
-const RED = '#F45353';
-
 const decorateOrderBookOrder = (order, tokens) => {
   const orderType = order.tokenGive === tokens[1].address ? 'buy' : 'sell';
 
   return({
     ...order,
     orderType,
-    orderTypeClass: (orderType === 'buy' ? GREEN : RED)
+    orderTypeClass: (orderType === 'buy' ? GREEN : RED),
+    orderFillAction: (orderType === 'buy' ? 'sell' : 'buy')
   })
 }

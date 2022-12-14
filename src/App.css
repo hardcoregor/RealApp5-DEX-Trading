@@ -49,6 +49,10 @@ body,
   background: #3e3d41;
 }
 
+.light-gray-bg {
+  background: #66646b;
+}
+
 .pink_gradient {
   position: absolute;
   top: 0%;

@@ -41,7 +41,7 @@ const Order = () => {
         <div>
           <div className='flex justify-between mb-2 w-full text-white font-poppins px-2'>
             <div className='text-center'>
-              <p>Buy amount</p>
+              <p>Amount</p>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ const Order = () => {
         <div className='mt-4'>
           <div className='flex justify-between mb-2 w-full text-white font-poppins px-2'>
             <div className='text-center'>
-              <p>Buy price</p>
+              <p>Price</p>
             </div>
           </div>
 
