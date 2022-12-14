@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import logo from '../assets/logo.png'
 import eth from '../assets/eth.svg'
 import Button from './Button';
@@ -38,7 +38,7 @@ const Navbar = () => {
         <h1 className='font-bold text-xl pl-3 cursor-pointer sm:hidden'>Swapper</h1>
       </section>
 
-      <section className='flex justify-center'>
+      <section className='flex justify-end flex-1 mr-44 md:ml-0 md:pl-3'>
         <ul className='flex font-bold text-base uppercase cursor-pointer sm:text-xs'>
           <li className='mr-3 hover:underline underline-offset-4'>Trading</li>
           <li className='mr-3 hover:underline underline-offset-4'>Staking</li>
@@ -50,24 +50,24 @@ const Navbar = () => {
         {account ?
           (<div className='btn-background flex items-center rounded-2xl'>
             {balance &&
-              <div className='flex text-white cursor-default items-center md:hidden'>
-                <p className='text-base font-thin uppercase ml-3 mr-1'>Balance:</p>
-                <p className='flex text-base font-medium uppercase mr-3'>{Number(balance).toFixed(4)} <span className='ml-1'>ETH</span></p>
+              <div className='flex text-white cursor-default items-center'>
+                <p className='text-sm font-poppins font-base uppercase ml-3 mr-1'>Balance:</p>
+                <p className='flex text-sm font-poppins uppercase mr-3'>{Number(balance).toFixed(0)} <span className='ml-1'>ETH</span></p>
               </div>
             }
             <a href={config[chainId] ? `${config[chainId].explorerUrl}address/${account}` : `#`}  target="_blank" rel='noreferrer'>
-              <Button btnName={account.slice(0, 5) + '...' + account.slice(37, 42)} classStyle='sm:text-xs px-1.5 font-semibold'/>
+              <Button btnName={account.slice(0, 5) + '...' + account.slice(38, 42)} classStyle='sm:text-xs px-1.5 font-semibold md:hidden'/>
             </a>
 
             {chainId && (
-              <div className='flex pl-2 sm:text-xs sm:pl-0'>
-                <select className='btn-background outline-none cursor-pointer text-center' name="networks" id="networks" value={config[chainId] ? `0x${chainId.toString(16)}` : `0`} onChange={networkHandler}>
-                  <option value="0">Select network</option>
+              <div className='flex pl-2 sm:text-xs sm:pl-0 md:pl-0'>
+                <select className='btn-background outline-none cursor-pointer text-center font-poppins md:rounded-2xl' name="networks" id="networks" value={config[chainId] ? `0x${chainId.toString(16)}` : `0`} onChange={networkHandler}>
+                  <option value="0">Network</option>
                   <option value="0x7A69">Localhost</option>
                   <option value="0x5">Goerli</option>
                   <option value="0x1">Mainnet</option>
                 </select>
-                <img src={eth} alt="ETH logo" width={40} className='sm:hidden'/>
+                <img src={eth} alt="ETH logo" width={40} className='sm:hidden md:hidden'/>
               </div>
             )}
 

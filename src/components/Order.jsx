@@ -31,7 +31,7 @@ const Order = () => {
 
 
   return (
-    <div className=''>
+    <div className='flex-1'>
       <div className='w-full mt-3 pb-3 border-b border-pink-1 border-opacity-30'>
         <h2 className='font-poppins font-bold text-white text-lg text-center'>New order</h2>
       </div>

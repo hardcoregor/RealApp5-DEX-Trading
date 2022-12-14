@@ -12,6 +12,14 @@
   }
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.apexcharts-tooltip span {
+  color: #ffffff;
+}
+
 html,
 body,
 #app,

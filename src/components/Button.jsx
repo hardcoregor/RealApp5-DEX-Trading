@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const Button = ({ btnName, classStyle, handleClick }) => {
 
   return (

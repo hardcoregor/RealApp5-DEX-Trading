@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import config from '../context/config.json';
@@ -8,6 +8,7 @@ import Markets from './Markets';
 import Navbar from './Navbar';
 import Order from './Order';
 import OrderBook from './OrderBook';
+import { PriceChart } from './PriceChart';
 
 function App() {
   const dispatch = useDispatch();
@@ -43,17 +44,18 @@ function App() {
 
 
   return (
-    <div className='flex flex-col h-full bg overflow-auto'>
+    <div className='flex flex-col h-full bg overflow-auto '>
       <Navbar />
-      <main className='flex flex-1'>
-        <section className='w-1/4  border-r border-pink-1 border-opacity-30 z-10'>
+      <main className='h-full  flex flex-1'>
+        <section className='w-1/4  border-r border-pink-1 border-opacity-30 z-10 flex flex-col'>
           <Markets />
           <Balance />
           <Order />
           <div className="pink_gradient -z-5" />
           <div className="blue_gradient -z-5" />
         </section>
-        <section className='w-3/4'>
+        <section className='w-3/4 pb-12'>
+          <PriceChart />
           <OrderBook />
         </section>
       </main>
