@@ -52,7 +52,7 @@ export const options = {
     labels: {
       show: true,
       style: {
-        colors: '#767F92',
+        colors: '#fff',
         fontSize: '14px',
         cssClass: 'apexcharts-xaxis-label',
       },
