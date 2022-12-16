@@ -24,11 +24,11 @@ html,
 body,
 #app,
 #app > div {
-  height: 100vh;
+  height: 100%;
 }
 
 #root {
-  height: 100vh;
+  height: 100%;
 }
 
 .bg {

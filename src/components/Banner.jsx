@@ -7,3 +7,5 @@ export const Banner = ({ text }) => {
     </div>
   )
 }
+
+export default Banner;

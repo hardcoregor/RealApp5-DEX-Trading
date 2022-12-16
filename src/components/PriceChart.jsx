@@ -6,11 +6,11 @@ import upArrow from '../assets/up-arrow.svg';
 import downArrow from '../assets/down-arrow.svg';
 import { options, defaultSeries } from './PriceChart.config';
 import { Banner } from './Banner';
-import { priceChartSelector } from '../store/selectors';
+import { filledOrdersSelector, priceChartSelector } from '../store/selectors';
 
 export const PriceChart = () => {
-  const account = useSelector(state => state.provider.account);
   const symbols = useSelector(state => state.tokens.symbols);
+  const filledOrders = useSelector(filledOrdersSelector);
 
   const priceChart = useSelector(priceChartSelector);
 
@@ -31,7 +31,7 @@ export const PriceChart = () => {
         }
       </div>
 
-      {!account ? (
+      {!filledOrders ? (
         <Banner text={'Please connect with Metamask'} />
       ) : (
         <Chart

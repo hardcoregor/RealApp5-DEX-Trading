@@ -10,6 +10,7 @@ import Order from './Order';
 import OrderBook from './OrderBook';
 import { PriceChart } from './PriceChart';
 import Trades from './Trades';
+import Transactions from './Transactions';
 
 function App() {
   const dispatch = useDispatch();
@@ -57,7 +58,10 @@ function App() {
         </section>
         <section className='w-3/4 pb-12'>
           <PriceChart />
-          <Trades />
+          <div className='flex w-full h-1/3'>
+            <Transactions />
+            <Trades />
+          </div>
           <OrderBook />
         </section>
       </main>
