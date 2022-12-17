@@ -48,7 +48,7 @@ function App() {
   return (
     <div className='flex flex-col h-full bg overflow-auto '>
       <Navbar />
-      <main className='h-full  flex flex-1'>
+      <main className='h-[calc(100%-78px)] flex flex-1'>
         <section className='w-1/4  border-r border-pink-1 border-opacity-30 z-10 flex flex-col'>
           <Markets />
           <Balance />

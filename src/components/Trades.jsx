@@ -11,20 +11,20 @@ const Trades = () => {
   const symbols = useSelector(state => state.tokens.symbols);
 
   return (
-    <div className='w-1/2 btn-background m-3 rounded-lg p-2 pb-6 '>
+    <div className='w-1/2 btn-background m-3 rounded-lg p-2 pb-6 overflow-y-auto scrollbar-hide'>
       <div>
         <h2 className='text-white font-poppins font-bold text-lg text-center pb-1'>Trades</h2>
       </div>
 
       {!filledOrders || filledOrders.length === 0 ? (
-        <Banner text="No transactions"/>
+        <p className='font-poppins text-white text-center font-light text-2xl'>No transactions</p>
       ) : (
         <table className='flex flex-col w-full text-white font-poppins font-light'>
           <thead>
-            <tr className='flex'>
-              <th className='w-1/3 flex flex-col justify-center items-center font-light'>Time <img src={sort} alt="Sort" /></th>
-              <th className='w-1/3 flex flex-col justify-center items-center font-light'>{symbols && symbols[0]}<img src={sort} alt="Sort" /></th>
-              <th className='w-1/3 flex flex-col justify-center items-center font-light'>{symbols && symbols[0]}/{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
+            <tr className='flex mt-1'>
+              <th className='w-1/3 flex justify-start text-sm font-poppins font-light'>Time <img src={sort} alt="Sort" /></th>
+              <th className='w-1/3 flex justify-center text-sm font-poppins font-light'>{symbols && symbols[0]}<img src={sort} alt="Sort" /></th>
+              <th className='w-1/3 flex justify-end text-sm font-poppins font-light'>{symbols && symbols[0]}/{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
             </tr>
           </thead>
           <tbody className='w-full mt-1'>
