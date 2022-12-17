@@ -7,6 +7,10 @@ const OrderBook = () => {
   const symbols = useSelector(state => state.tokens.symbols);
   const orderBook = useSelector(orderBookSelector);
 
+  const fillOrderHandler = (order) => {
+    console.log('fiilllll', order)
+  }
+
   return (
     <div className='btn-background m-3 rounded-lg overflow-auto h-1/3 scrollbar-hide'>
       <div className='flex flex-col w-full btn-background py-2 border-b rounded-t-lg'>
@@ -33,7 +37,11 @@ const OrderBook = () => {
             <tbody className='cursor-pointer'>
               {orderBook && orderBook.sellOrders.map((order, index) => {
                 return (
-                  <tr className='flex flex-row justify-between px-4 text-white font-poppins text-sm hover:bg-light-gray' key={index}>
+                  <tr
+                    className='flex flex-row justify-between px-4 text-white font-poppins text-sm hover:bg-light-gray'
+                    key={index}
+                    onClick={() => fillOrderHandler(order)}
+                  >
                     <td className='w-1/3'>{order.token0Amount}</td>
                     <td className="text-redSell w-1/3">{order.tokenPrice}</td>
                     <td className='w-1/3'>{order.token1Amount}</td>
@@ -61,7 +69,11 @@ const OrderBook = () => {
             <tbody className='cursor-pointer'>
               {orderBook && orderBook.buyOrders.map((order, index) => {
                 return (
-                  <tr className='flex flex-row justify-between px-4 text-white font-poppins text-sm hover:bg-light-gray' key={index}>
+                  <tr
+                    className='flex flex-row justify-between px-4 text-white font-poppins text-sm hover:bg-light-gray'
+                    key={index}
+                    onClick={() => fillOrderHandler(order)}
+                  >
                     <td className='w-1/3'>{order.token0Amount}</td>
                     <td className="text-greenBuy w-1/3">{order.tokenPrice}</td>
                     <td className='w-1/3'>{order.token1Amount}</td>

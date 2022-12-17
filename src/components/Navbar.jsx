@@ -40,7 +40,7 @@ const Navbar = () => {
 
       <section className='flex justify-end flex-1 mr-44 md:ml-0 md:pl-3'>
         <ul className='flex font-bold text-base uppercase cursor-pointer sm:text-xs'>
-          <li className='mr-3 hover:underline underline-offset-4'>Trading</li>
+            <li className='mr-3 hover:underline underline-offset-4'>Trading</li>
           <li className='mr-3 hover:underline underline-offset-4'>Staking</li>
           <li className='mr-3 hover:underline underline-offset-4'>Faucet</li>
         </ul>
@@ -55,8 +55,8 @@ const Navbar = () => {
                 <p className='flex text-sm font-poppins uppercase mr-3'>{Number(balance).toFixed(0)} <span className='ml-1'>ETH</span></p>
               </div>
             }
-            <a href={config[chainId] ? `${config[chainId].explorerUrl}address/${account}` : `#`}  target="_blank" rel='noreferrer'>
-              <Button btnName={account.slice(0, 5) + '...' + account.slice(38, 42)} classStyle='sm:text-xs px-1.5 font-semibold md:hidden'/>
+            <a href={config[chainId] ? `${config[chainId].explorerUrl}address/${account}` : `#`} target="_blank" rel='noreferrer'>
+              <Button btnName={account.slice(0, 5) + '...' + account.slice(38, 42)} classStyle='sm:text-xs px-1.5 font-semibold md:hidden nft-gradient' />
             </a>
 
             {chainId && (
@@ -67,7 +67,7 @@ const Navbar = () => {
                   <option value="0x5">Goerli</option>
                   <option value="0x1">Mainnet</option>
                 </select>
-                <img src={eth} alt="ETH logo" width={40} className='sm:hidden md:hidden'/>
+                <img src={eth} alt="ETH logo" width={40} className='sm:hidden md:hidden' />
               </div>
             )}
 

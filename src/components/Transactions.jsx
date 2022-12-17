@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { myFilledOrdersSelector, myOpenOrdersSelector } from '../store/selectors'
 import Button from './Button'
 import sort from '../assets/sort.svg'
+import { cancelOrder } from '../context/Interactions'
 
 const Transactions = () => {
   const [activeOrders, setActiveOrders] = useState('bg-white text-black');
@@ -10,6 +12,10 @@ const Transactions = () => {
   const openOrders = useSelector(myOpenOrdersSelector);
   const filledOrders = useSelector(myFilledOrdersSelector);
   const symbols = useSelector(state => state.tokens.symbols);
+  const provider = useSelector(state => state.provider.connection);
+  const exchange = useSelector(state => state.exchange.contract);
+
+  const dispatch = useDispatch()
 
   const activeOrd = () => {
     setActiveOrders('bg-white text-black');
@@ -21,16 +27,22 @@ const Transactions = () => {
     setActiveOrders(false);
   }
 
-  const test = () => {
-    if (activeOrders) {
-      console.log('Orders')
-    } else if (activeTrades) {
-      console.log('Trades')
-    } else {
-      console.log('bug')
-    }
+  // const test = () => {
+  //   if (activeOrders) {
+  //     console.log('Orders')
+  //   } else if (activeTrades) {
+  //     console.log('Trades')
+  //   } else {
+  //     console.log('bug')
+  //   }
+  // }
+  // test();
+
+  const cancelHandler = (order) => {
+    cancelOrder(provider, exchange, order, dispatch);
   }
-  test();
+
+
 
   return (
     <div className='w-1/2 flex flex-col btn-background m-3 rounded-lg p-2 pb-6 overflow-y-auto scrollbar-hide'>
@@ -56,10 +68,10 @@ const Transactions = () => {
             </div>
           ) : (
             <thead>
-              <tr className='flex'>
+              <tr className='flex mb-1'>
                 <th className='w-1/3 flex justify-start text-sm font-poppins font-light'>{symbols && symbols[0]} <img src={sort} alt="Sort" /></th>
                 <th className='w-1/3 flex justify-center text-sm font-poppins font-light'>{symbols && symbols[0]}/{symbols && symbols[1]}<img src={sort} alt="Sort" /></th>
-                <th className='w-1/3 flex justify-end text-sm font-poppins font-light'>empty<img src={sort} alt="Sort" /></th>
+                <th className='w-1/3 flex justify-end text-sm font-poppins font-light'></th>
               </tr>
             </thead>
           )}
@@ -71,7 +83,7 @@ const Transactions = () => {
                 <tr className='flex justify-between w-full' key={index}>
                   <td style={{ color: `${order.orderTypeClass}` }}>{order.token0Amount}</td>
                   <td className='ml-4'>{order.tokenPrice}</td>
-                  <td>cancel</td>
+                  <td><Button btnName="cancel" classStyle="border px-2 py-1 mb-1 hover:text-black" handleClick={() => cancelHandler(order)} /></td>
                 </tr>
               )
             })}
@@ -82,7 +94,7 @@ const Transactions = () => {
         <table className='flex flex-col w-full text-white font-poppins font-light mt-2'>
           {!openOrders || openOrders.length === 0 ? (
             <div className='flex text-2xl font-poppins text-white text-center h-full items-center justify-center'>
-              <p>No open orders</p>
+              <p>No filled orders</p>
             </div>
           ) : (
             <thead>
@@ -100,7 +112,7 @@ const Transactions = () => {
               return (
                 <tr className='flex justify-between w-full' key={index}>
                   <td className='w-1/3'>{order.formattedTimestamp}</td>
-                  <td className='w-1/3 text-center' style={{ color: `${order.orderTypeClass}`}}>{order.orderSign}{order.token0Amount}</td>
+                  <td className='w-1/3 text-center' style={{ color: `${order.orderTypeClass}` }}>{order.orderSign}{order.token0Amount}</td>
                   <td className='w-1/3 text-right'>{order.tokenPrice}</td>
                 </tr>
               )
@@ -108,9 +120,10 @@ const Transactions = () => {
 
           </tbody>
         </table>
-      )}
+      )
+      }
 
-    </div>
+    </div >
   )
 }
 
