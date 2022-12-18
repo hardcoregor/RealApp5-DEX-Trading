@@ -5,6 +5,8 @@ import { ethers } from "ethers";
 
 const tokens = state => get(state, 'tokens.contracts');
 const account = state => get(state, 'provider.account');
+const events = state => get(state, 'exchange.events');
+
 const allOrders = state => get(state, 'exchange.allOrders.data', []);
 const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', []);
 const filledOrders = state => get(state, 'exchange.filledOrders.data', []);
@@ -25,6 +27,16 @@ const openOrders = state => {
 
   return openOrders;
 }
+
+export const myEventsSelector = createSelector(
+  account,
+  events,
+  (account, events) => {
+    // events = events.filter((e) => e.args.user === account);
+    console.log(events);
+    return events
+  }
+)
 
 export const myOpenOrdersSelector = createSelector(
   account,
@@ -151,8 +163,6 @@ export const myFilledOrdersSelector = createSelector(
     orders = orders.sort((a, b) => b.timestamp - a.timestamp)
 
     orders = decorateMyFilledOrders(orders, account, tokens);
-
-    console.log(orders)
 
     return orders;
   }

@@ -72,6 +72,11 @@ export const subscribeToEvents = (exchange, dispatch) => {
     const order = event.args
     dispatch({ type: 'NEW_ORDER_SUCCESS', order, event });
   })
+
+  exchange.on('Trade', (id, user, tokenGet, amountGet, tokenGive, amountGive, creator, timestamp, event) => {
+    const order = event.args
+    dispatch({ type: 'ORDER_FILL_SUCCESS', order, event });
+  })
 }
 
 export const loadBalances = async (dispatch, exchange, tokens, account) => {

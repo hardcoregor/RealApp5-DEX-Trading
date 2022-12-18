@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import config from '../context/config.json';
 import { loadAccount, loadExchange, loadNetwork, loadProvider, loadToken, subscribeToEvents, loadAllOrders } from '../context/Interactions';
+import Alert from './Alert';
 import Balance from './Balance';
 import Markets from './Markets';
 import Navbar from './Navbar';
@@ -48,7 +49,7 @@ function App() {
   return (
     <div className='flex flex-col h-full bg overflow-auto '>
       <Navbar />
-      <main className='h-[calc(100%-78px)] flex flex-1'>
+      <main className='h-[calc(100%-78px)] flex flex-1 relative'>
         <section className='w-1/4  border-r border-pink-1 border-opacity-30 z-10 flex flex-col'>
           <Markets />
           <Balance />
@@ -65,6 +66,7 @@ function App() {
           <OrderBook />
         </section>
       </main>
+      <Alert />
     </div>
   );
 }

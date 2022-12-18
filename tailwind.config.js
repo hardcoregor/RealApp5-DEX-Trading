@@ -23,7 +23,8 @@ module.exports = {
         'pink-1': '#eb1484',
         'redSell': '#F45353',
         'greenBuy': '#25CE8F',
-        'light-gray': '#66646b'
+        'light-gray': '#66646b',
+        'link' : '#8ba9fe',
       },
       width: {
         215: '215px',
