@@ -1,17 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 import config from '../context/config.json';
 import { loadAccount, loadExchange, loadNetwork, loadProvider, loadToken, subscribeToEvents, loadAllOrders } from '../context/Interactions';
-import Alert from './Alert';
-import Balance from './Balance';
-import Markets from './Markets';
+import Dex from '../pages/Dex';
+import Faucet from '../pages/Faucet';
+import Staking from '../pages/Staking';
 import Navbar from './Navbar';
-import Order from './Order';
-import OrderBook from './OrderBook';
-import { PriceChart } from './PriceChart';
-import Trades from './Trades';
-import Transactions from './Transactions';
 
 function App() {
   const dispatch = useDispatch();
@@ -49,24 +45,11 @@ function App() {
   return (
     <div className='flex flex-col h-full bg overflow-auto '>
       <Navbar />
-      <main className='h-[calc(100%-78px)] flex flex-1 relative'>
-        <section className='w-1/4  border-r border-pink-1 border-opacity-30 z-10 flex flex-col'>
-          <Markets />
-          <Balance />
-          <Order />
-          <div className="pink_gradient -z-5" />
-          <div className="blue_gradient -z-5" />
-        </section>
-        <section className='w-3/4 pb-12'>
-          <PriceChart />
-          <div className='flex w-full h-1/3'>
-            <Transactions />
-            <Trades />
-          </div>
-          <OrderBook />
-        </section>
-      </main>
-      <Alert />
+      <Routes>
+        <Route path='/' element={<Dex />} />
+        <Route path='/staking' element={<Staking />} />
+        <Route path='/faucet' element={<Faucet />} />
+      </Routes>
     </div>
   );
 }

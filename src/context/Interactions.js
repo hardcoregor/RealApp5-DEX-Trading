@@ -207,3 +207,7 @@ export const fillOrder = async(provider, exchange, order, dispatch) => {
     dispatch({ type : 'ORDER_FILL_FAIL'});
   }
 }
+
+export const deleteHash = async(dispatch) => {
+  dispatch({ type : 'CLEAR_TRANSFER_SUCCESS'});
+}

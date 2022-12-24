@@ -229,6 +229,18 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
           events: [action.event, ...state.events]
         }
 
+        case 'CLEAR_TRANSFER_SUCCESS':
+          return {
+            ...state,
+            transaction: {
+              transactionType: 'Transfer',
+              isPending: false,
+              isSuccessful: false
+            },
+            transferInProgress: false,
+            events: [action.event, ...state.events]
+          }
+
     case 'TRANSFER_FAIL':
       return {
         ...state,

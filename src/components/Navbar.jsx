@@ -6,6 +6,7 @@ import eth from '../assets/eth.svg'
 import Button from './Button';
 import { loadAccount, loadProvider } from '../context/Interactions';
 import config from '../context/config.json';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -33,16 +34,26 @@ const Navbar = () => {
   return (
     <nav className='flex items-center p-4 bg text-white border-b border-pink-1 border-opacity-80 justify-between'>
 
-      <section className='flex w-1/4 z-50'>
-        <img src={logo} alt="logo" width={35} />
-        <h1 className='font-bold text-xl pl-3 cursor-pointer sm:hidden'>Swapper</h1>
+      <section className='flex min-w-[400px] z-50'>
+        <Link to="/">
+          <div className='flex'>
+            <img src={logo} alt="logo" width={35} />
+            <h1 className='font-bold text-xl pl-3 cursor-pointer sm:hidden'>Swapper</h1>
+          </div>
+        </Link>
       </section>
 
-      <section className='flex justify-end flex-1 mr-44 md:ml-0 md:pl-3'>
+      <section className='flex justify-end md:ml-0 md:pl-3'>
         <ul className='flex font-bold text-base uppercase cursor-pointer sm:text-xs'>
+          <Link to="/">
             <li className='mr-3 hover:underline underline-offset-4'>Trading</li>
-          <li className='mr-3 hover:underline underline-offset-4'>Staking</li>
-          <li className='mr-3 hover:underline underline-offset-4'>Faucet</li>
+          </Link>
+          <Link to="/staking">
+            <li className='mr-3 hover:underline underline-offset-4'>Staking</li>
+          </Link>
+          <Link to="/faucet">
+            <li className='mr-3 hover:underline underline-offset-4'>Faucet</li>
+          </Link>
         </ul>
       </section>
 
@@ -62,7 +73,7 @@ const Navbar = () => {
             {chainId && (
               <div className='flex pl-2 sm:text-xs sm:pl-0 md:pl-0'>
                 <select className='btn-background outline-none cursor-pointer text-center font-poppins md:rounded-2xl' name="networks" id="networks" value={config[chainId] ? `0x${chainId.toString(16)}` : `0`} onChange={networkHandler}>
-                  <option value="0">Network</option>
+                  {/* <option value="0">Localhost</option> */}
                   <option value="0x7A69">Localhost</option>
                   <option value="0x5">Goerli</option>
                   <option value="0x1">Mainnet</option>
@@ -72,7 +83,7 @@ const Navbar = () => {
             )}
 
           </div>) :
-          <Button btnName='connect' handleClick={connectHandler} />
+          <Button btnName='connect' handleClick={connectHandler} classStyle="hover:bg-black border" />
         }
       </section>
 
