@@ -51,6 +51,9 @@ const Navbar = () => {
           <Link to="/staking">
             <li className='mr-3 hover:underline underline-offset-4'>Staking</li>
           </Link>
+          <Link to="/ido">
+            <li className='mr-3 hover:underline underline-offset-4'>IDO</li>
+          </Link>
           <Link to="/faucet">
             <li className='mr-3 hover:underline underline-offset-4'>Faucet</li>
           </Link>

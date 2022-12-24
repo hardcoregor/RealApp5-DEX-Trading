@@ -300,3 +300,37 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
       return state
   }
 }
+
+const DEFAULT_FAUCET_STATE = {
+  loaded: false,
+  contracts: [],
+  tokens: []
+}
+
+export const faucet = (state = DEFAULT_FAUCET_STATE, action) => {
+  switch (action.type) {
+    case 'FAUCET_1_LOADED':
+      return {
+        ...state,
+        loaded: true,
+        contracts: [action.faucet],
+        tokens: [action.token]
+      }
+    case 'FAUCET_2_LOADED':
+      return {
+        ...state,
+        loaded: true,
+        contracts: [...state.contracts, action.faucet],
+        tokens: [...state.tokens, action.token]
+      }
+      case 'FAUCET_3_LOADED':
+        return {
+          ...state,
+          loaded: true,
+          contracts: [...state.contracts, action.faucet],
+          tokens: [...state.tokens, action.token]
+        }
+    default:
+      return state
+  }
+}
