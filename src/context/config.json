@@ -21,18 +21,23 @@
   },
   "5" : {
     "exchange": {
-      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      "address": "0xAc198b846f622Cf31A557C993850AFfD09285087"
     },
     "Hrdcr": {
-      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+      "address": "0x90D940D20fE50C5729c1a2bb8899555E1097bEe4"
     },
     "mEth": {
-      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+      "address": "0x9B34D7D57eFB0930C60c4b37fD917949270Fa0CD"
     },
     "mDai": {
-      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+      "address": "0x49DabB06295F708018e8E19B3465d31D9B543c75"
     },
-    "explorerUrl": "https://goerli.etherscan.io/"
+    "explorerUrl": "https://goerli.etherscan.io/",
+    "faucet": {
+      "HrdcrFaucet": "0x56D8e38c78b2822aB15953ab96162B3F35eD73F1",
+      "mEthFaucet": "0xf04E7Cf1A1b65c152BA55d9bd820DE9BDd8Dc47A",
+      "mDaiFaucet": "0x1911a662E4cD10F7C14B608ea816D83ae63a4c93"
+    }
   },
 
   "1" : {

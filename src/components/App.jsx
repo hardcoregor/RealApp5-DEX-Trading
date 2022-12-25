@@ -27,13 +27,16 @@ function App() {
 
     const addressHrdcr = config[chainId].Hrdcr.address;
     const addressMeth = config[chainId].mEth.address;
+    const addressMdai = config[chainId].mDai.address;
     await loadToken(provider, [addressHrdcr, addressMeth], dispatch)
 
     const addressExchange = config[chainId].exchange.address;
     const exchange = await loadExchange(provider, addressExchange, dispatch);
 
     loadAllOrders(provider, exchange, dispatch);
-    await loadFaucet(provider, ['0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB','0x9E545E3C0baAB3E08CdfD552C960A1050f373042','0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9'] , dispatch) // TO DO 
+    await loadFaucet(provider, ['0x56D8e38c78b2822aB15953ab96162B3F35eD73F1','0xf04E7Cf1A1b65c152BA55d9bd820DE9BDd8Dc47A','0x1911a662E4cD10F7C14B608ea816D83ae63a4c93'] , dispatch) // GOERLI
+
+    // await loadFaucet(provider, ['0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB','0x9E545E3C0baAB3E08CdfD552C960A1050f373042','0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9'] , dispatch); //LOCAL
 
     subscribeToEvents(exchange, dispatch);
   }

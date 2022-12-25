@@ -14,7 +14,7 @@ const Alert = () => {
   const isError = useSelector(state => state.exchange.transaction.isError);
   const isSuccess = useSelector(state => state.exchange.transaction.isSuccessful);
   const account = useSelector(state => state.provider.account);
-  const network = useSelector(state => state.provider.network);
+  const network = useSelector(state => state.provider.chainId);
   const events = useSelector(myEventsSelector);
 
   const removeHandler = () => {
@@ -45,7 +45,8 @@ const Alert = () => {
       ) : isSuccess && (
         <div className='text-center p-4 light-gray-bg rounded-2xl px-8 py-4 cursor-pointer' ref={alertRef} onClick={removeHandler}>
           <h1 className='font-poppins text-white font-semibold'>Transaction successful</h1>
-          <a href={config[network] ? `${config[network].explorerURL}/tx/${events[0].transactionHash}` : '#'}
+          <a href={config[network] ? `${config[network].explorerUrl}/tx/${events[0].transactionHash}` : '#'}
+          
             target='_blank'
             rel='noreferrer'
             className='text-white hover:text-link'

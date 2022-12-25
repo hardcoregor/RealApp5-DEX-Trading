@@ -28,7 +28,7 @@ const Faucet = () => {
     else if (chainId && token === config[chainId]['mDai']['address']) {
       setChoosenFaucet(faucetContract[2])
     }
-  }, [token, choosenFaucet])
+  }, [chainId, faucetContract, token, choosenFaucet])
 
   const changeToken = (e) => {
     setToken(config[chainId][e.target.value]['address']);
@@ -42,48 +42,49 @@ const Faucet = () => {
 
   return (
     <div className='w-full h-full flex flex-col justify-center items-center'>
-      <div className='mb-4 flex items-center flex-col p-4'>
-        <h1 className='font-poppins text-white font-bold text-2xl uppercase '>Faucet</h1>
-        <p className='font-poppins text-white font-bold '>Get 25 {faucetToken}/day</p>
-        <select className='mt-2 border w-full btn-background outline-none cursor-pointer text-center font-poppins text-white py-1' name="tokens" id="tokens" value={config[chainId] ? (chainId.token) : ''} onChange={changeToken}>
-          <option selected>Choose token</option>
-          <option value='Hrdcr'>Hrdcr</option>
-          <option value="mEth">mEth</option>
-          <option value="mDai">mDai</option>
-        </select>
-      </div>
+      <div className='w-1/2'>
 
-      <div className='w-full flex justify-center items-center'>
-        <div className='flex flex-col justify-between items-center btn-background min-h-[200px] min-w-2/3 rounded-2xl p-4'>
-          <div className='flex flex-col justify-between w-full'>
-            <div className='flex my-4'>
-              <input type="text" placeholder='Enter Your Wallet Address (0x...)' defaultValue={account} className='flex-1 mr-4 rounded-2xl px-4 outline-none text-bold font-poppins' />
-              <Button
-                btnName={`Tap to get ${faucetToken}`}
-                classStyle="border nft-gradient"
-                handleClick={getToken}
-              />
+        <div className='w-full flex justify-center items-center'>
+          <div className='w-full flex flex-col justify-between items-center btn-background min-h-[200px] rounded-2xl p-4'>
 
+            <div className='flex items-center flex-col'>
+              <h1 className='font-poppins text-white font-bold text-2xl uppercase '>Faucet</h1>
             </div>
-          </div>
-          <div className='border w-full rounded-t-xl'>
-            <h3 className='text-white font-poppins text-center p-2'>
-              Transaction data
-            </h3>
 
-            {transactionData ?
-              (<p className='bg-white text-center flex justify-between px-4 py-2'><span>Successful</span>
-                <a href={config[network] ? `${config[network].explorerURL}/tx/${transactionData}` : '#'}
-                  target='_blank'
-                  rel='noreferrer'
-                  className='hover:text-link'
-                >
-                  {transactionData}
-                </a>
-              </p>) : (
-                <p className='bg-white text-center px-4 py-2'><span>No transactions yet.</span>
-                </p>
-              )}
+            <div className='w-full flex'>
+              <div className='w-full flex my-4 justify-between items-center'>
+                <select className='border w-1/2 btn-background outline-none cursor-pointer text-center font-poppins text-white rounded-2xl mr-2 text-xl font-normal' name="tokens" id="tokens" value={config[chainId] ? (chainId.token) : ''} onChange={changeToken}>
+                  <option selected>Choose token</option>
+                  <option value='Hrdcr'>Hrdcr</option>
+                  <option value="mEth">mEth</option>
+                  <option value="mDai">mDai</option>
+                </select>
+                <Button
+                  btnName={`Get ${faucetToken}`}
+                  classStyle="border nft-gradient w-1/2 py-0 ml-2 text-xl"
+                  handleClick={getToken}
+                />
+              </div>
+            </div>
+
+            <div className='border border-bordergray w-full rounded-2xl'>
+              <h3 className='text-white font-poppins text-center p-2'>
+                Transaction data
+              </h3>
+              {transactionData ?
+                (<p className='text-white border-t border-bordergray text-center flex justify-between px-4 py-2'><span>Successful</span>
+                  <a href={config[network] ? `${config[network].explorerURL}/tx/${transactionData}` : '#'}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='hover:text-link'
+                  >
+                    {transactionData}
+                  </a>
+                </p>) : (
+                  <p className='text-white border-t border-bordergray text-center px-4 py-2'><span>No transactions yet.</span>
+                  </p>
+                )}
+            </div>
 
           </div>
         </div>

@@ -1,6 +1,6 @@
 import moment from "moment";
 import { createSelector } from "reselect";
-import { get, groupBy, reject, maxBy, minBy, create } from 'lodash';
+import { get, groupBy, reject, maxBy, minBy } from 'lodash';
 import { ethers } from "ethers";
 
 const tokens = state => get(state, 'tokens.contracts');

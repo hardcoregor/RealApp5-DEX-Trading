@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 
-import Banner from './Banner';
 import sort from '../assets/sort.svg'
 import { filledOrdersSelector } from '../store/selectors';
 

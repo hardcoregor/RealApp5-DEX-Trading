@@ -25,6 +25,7 @@ module.exports = {
         'greenBuy': '#25CE8F',
         'light-gray': '#66646b',
         'link' : '#8ba9fe',
+        'bordergray' : '#777479',
       },
       width: {
         215: '215px',
