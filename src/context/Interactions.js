@@ -5,7 +5,7 @@ import exchangeAbi from '../context/abis/Exchange.sol/Exchange.json';
 import faucetAbi from '../context/abis/Faucet.sol/Faucet.json';
 
 export const loadProvider = (dispatch) => {
-  const connection = new ethers.providers.Web3Provider(window.ethereum);
+  const connection = ((window.ethereum != null) ? new ethers.providers.Web3Provider(window.ethereum) : ethers.providers.getDefaultProvider());
   dispatch({ type: 'PROVIDER_LOADED', connection })
 
   return connection;
